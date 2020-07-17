@@ -5,7 +5,7 @@
     <title>blog 博客系统</title>
 </head>
 <body>
-    <div>顶部分类
+    <div>顶部分类:
         {% for cate in navs %}
             <a href="/category/{{ cate.id }}/">{{ cate.name }}</a>
         {% endfor %}
@@ -33,9 +33,16 @@
     {% endfor %}
     </ul>
 
-    <div>底部分类
+    <div>底部分类:
         {% for cate in categories %}
             <a href="/category/{{ cate.id }}/">{{ cate.name }}</a>
+        {% endfor %}
+    </div>
+
+    <div>侧边栏展示：
+        {% for sidebar in sidebars %}
+            <h4>{{ sidebar.title }}</h4>
+            {{ sidebar.content }}
         {% endfor %}
     </div>
 </body>
