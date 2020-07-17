@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>blog 博客系统</title>
 </head>
 <body>
+    {% if tag %}
+        标签页：{{ tag.name }}
+    {% endif %}
+
+    {% if category %}
+        分类页：{{ category.name }}
+    {% endif %}
+
     <ul>
     {% for post in post_list %}
         <li>
