@@ -1,7 +1,9 @@
 from django.contrib import admin
+from django.contrib.admin.models import LogEntry
 from django.urls import reverse
 from django.utils.html import format_html
 
+from blog.base_admin import BaseOwnerAdmin
 from blog.custom_site import custom_site
 from .adminforms import PostAdminForm
 from .models import Post, Category, Tag
@@ -14,7 +16,7 @@ class PostInline(admin.TabularInline):  # StackedInline样式不同
 
 
 @admin.register(Category, site=custom_site)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(BaseOwnerAdmin):
     inlines = [PostInline, ]
 
     list_display = ('name', 'status', 'is_nav', 'created_time', 'post_count')
@@ -25,19 +27,19 @@ class CategoryAdmin(admin.ModelAdmin):
 
     post_count.short_description = '文章数量'
 
-    def save_model(self, request, obj, form, change):
-        obj.owner = request.user
-        return super(CategoryAdmin, self).save_model(request, obj, form, change)
+    # def save_model(self, request, obj, form, change):
+    #     obj.owner = request.user
+    #     return super(CategoryAdmin, self).save_model(request, obj, form, change)
 
 
 @admin.register(Tag, site=custom_site)
-class TagAdmin(admin.ModelAdmin):
+class TagAdmin(BaseOwnerAdmin):
     list_display = ('name', 'status', 'created_time')
     fields = ('name', 'status')
 
-    def save_model(self, request, obj, form, change):
-        obj.owner = request.user
-        return super(TagAdmin, self).save_model(request, obj, form, change)
+    # def save_model(self, request, obj, form, change):
+    #     obj.owner = request.user
+    #     return super(TagAdmin, self).save_model(request, obj, form, change)
 # request是当前请求，request.user是当前已经登录的用户。如果是未登录的情况下，拿到的就是匿名用户
 # obj是当前要保存的对象，form是页面提交表单之后的对象，嫦娥用于标志本次保存的数据是新增还是更新
 
@@ -58,7 +60,7 @@ class CategoryOwnerFilter(admin.SimpleListFilter):
 
 
 @admin.register(Post, site=custom_site)
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(BaseOwnerAdmin):
     form = PostAdminForm
 
     list_display = [
@@ -115,9 +117,9 @@ class PostAdmin(admin.ModelAdmin):
         )
     operator.short_description = '操作'
 
-    def save_model(self, request, obj, form, change):
-        obj.owner = request.user
-        return super(PostAdmin, self).save_model(request, obj, form, change)
+    # def save_model(self, request, obj, form, change):
+    #     obj.owner = request.user
+    #     return super(PostAdmin, self).save_model(request, obj, form, change)
 
     def get_queryset(self, request):
         qs = super(PostAdmin, self).get_queryset(request)
@@ -128,3 +130,8 @@ class PostAdmin(admin.ModelAdmin):
             'all': ("https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css", ),
         }
         js = ('https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.js', )
+
+
+@admin.register(LogEntry, site=custom_site)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = ['object_repr', 'object_id', 'action_flag', 'user', 'change_message']
