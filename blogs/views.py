@@ -36,6 +36,7 @@ def post_detail(request, post_id):
 
     context = {
         'post': post,
+        'sidebars': SideBar.get_all(),
     }
     context.update(Category.get_navs())
 
