@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "./base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block main %}
     {% if post %}
         <h1>{{ post.title }}</h1>
         <div>
@@ -13,14 +10,7 @@
         </div>
         <hr/>
         <p>
-        {{ post.content }}
+            {{ post.content }}
         </p>
     {% endif %}
-    <div>侧边栏展示：
-        {% for sidebar in sidebars %}
-            <h4>{{ sidebar.title }}</h4>
-            {{ sidebar.content_html }}
-        {% endfor %}
-    </div>
-</body>
-</html>
+{% endblock %}
