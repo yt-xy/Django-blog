@@ -22,12 +22,12 @@ from config.views import links
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    url(r'^super_admin/', admin.site.urls),
-    url(r'^admin/', custom_site.urls),
+    url(r'^super_admin/', admin.site.urls, name='super-admin'),
+    url(r'^admin/', custom_site.urls, name='admin'),
 
-    url(r'^$', post_list),
-    url(r'^category/(?P<category_id>\d+)/$', post_list),
-    url(r'^tag/(?P<tag_id>\d+)/$', post_list),
-    url(r'^post/(?P<post_id>\d+).html$', post_detail),
-    url(r'^links/$', links),
+    url(r'^$', post_list, name='index'),
+    url(r'^category/(?P<category_id>\d+)/$', post_list, name='category-list'),
+    url(r'^tag/(?P<tag_id>\d+)/$', post_list, name='tag-list'),
+    url(r'^post/(?P<post_id>\d+).html$', post_detail, name='post-detail'),
+    url(r'^links/$', links, name='links'),
 ]
