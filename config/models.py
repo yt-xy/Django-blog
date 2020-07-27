@@ -2,9 +2,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.template.loader import render_to_string
 
-from blogs.models import Post
-from comment.models import Comment
-
 
 class Link(models.Model):
     STATUS_NORMAL = 1
@@ -67,6 +64,9 @@ class SideBar(models.Model):
     @property
     def content_html(self):
         """直接渲染模板"""
+        from blogs.models import Post  # 避免循环引用
+        from comment.models import Comment
+
         result = ''
         if self.display_type == self.DISPLAY_HTML:
             result = self.content

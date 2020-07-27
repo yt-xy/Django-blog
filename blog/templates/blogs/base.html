@@ -6,8 +6,8 @@
 </head>
 <body>
     <div>顶部分类：
-        {% for cate in nave %}
-            <a href={% url 'category-list' cate.id %}>{{ cate.name }}</a>
+        {% for cate in navs %}
+            <a href="{% url 'category-list' cate.id %}">{{ cate.name }}</a>
         {% endfor %}
     </div>
     <hr/>
@@ -18,7 +18,7 @@
     <hr/>
     <div>底部分类：
         {% for cate in categories %}
-            <a href={% url 'category-list' cate.id %}">{{ cate.name }}</a>
+            <a href="{% url 'category-list' cate.id %}">{{ cate.name }}</a>
         {% endfor %}
     </div>
 
