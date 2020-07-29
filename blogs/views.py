@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 
@@ -63,6 +64,23 @@ class PostDetailView(CommonViewMixin, DetailView):
     template_name = 'blogs/detail.html'
     context_object_name = 'post'
     pk_url_kwarg = 'post_id'
+
+
+class SearchView(IndexView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context.update({
+            'keyword': self.request.GET.get('keyword', '')
+        })
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        keyword = self.request.GET.get('keyword')
+        if not keyword:
+            return queryset
+        # SELECT * FROM post WHERE title ILIKE '%<keyword>%' or title ILIKE '%<keyword>%'
+        return queryset.filter(Q(title__icontains=keyword) | Q(desc__icontains=keyword))
 
 
 # def post_list(request, category_id=None, tag_id=None):
