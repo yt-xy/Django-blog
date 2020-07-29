@@ -83,6 +83,13 @@ class SearchView(IndexView):
         return queryset.filter(Q(title__icontains=keyword) | Q(desc__icontains=keyword))
 
 
+class AuthorView(IndexView):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        author_id = self.kwargs.get('owner_id')
+        return queryset.filter(owner_id=author_id)
+
+
 # def post_list(request, category_id=None, tag_id=None):
 #     """使用Model从数据库中批量拿取数据，然后把标题和摘要展示到页面上"""
 #     tag = None

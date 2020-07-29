@@ -17,6 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from blogs.views import (
+    AuthorView,
     CategoryView,
     PostDetailView,
     SearchView,
@@ -37,4 +38,5 @@ urlpatterns = [
     url(r'^post/(?P<post_id>\d+).html$', PostDetailView.as_view(), name='post-detail'),
     url(r'^links/$', links, name='links'),
     url(r'search/$', SearchView.as_view(), name='search'),
+    url(r'author/(?P<owner_id>\d+)/$', AuthorView.as_view(), name='search'),
 ]
