@@ -16,9 +16,7 @@
                     <span>{{ comment.created_time }}</span>
                 </div>
                 <div class="comment-content">
-                    {% autoescape off %}
-                        {{ comment.content }}
-                    {% endautoescape %}
+                    {{ comment.content }}
                 </div>
             </li>
         {% endfor %}

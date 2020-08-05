@@ -69,7 +69,7 @@ class PostAdmin(BaseOwnerAdmin):
     ]
     list_display_links = []
 
-    list_filter = [CategoryOwnerFilter]
+    list_filter = [CategoryOwnerFilter, ]
     search_fields = ['title', 'category__name']
 
     actions_on_top = True
@@ -78,7 +78,7 @@ class PostAdmin(BaseOwnerAdmin):
     # 编辑页面
     save_on_top = True
 
-    exclude = ('owner', )
+    exclude = ['owner']
 
     fieldsets = (
         ('基础配置', {
@@ -95,12 +95,13 @@ class PostAdmin(BaseOwnerAdmin):
             ),
         }),
         ('额外信息', {
-            'classes': ('collapse', ),
+            'classes': ('wide', ),
             'fields': ('tag', ),
         })
     )
 
-    filter_horizontal = ('tag', )
+    # filter_horizontal = ('tag', )
+    filter_vertical = ('tag', )
 
     # fields = (
     #     ('category', 'title'),
@@ -121,9 +122,9 @@ class PostAdmin(BaseOwnerAdmin):
     #     obj.owner = request.user
     #     return super(PostAdmin, self).save_model(request, obj, form, change)
 
-    def get_queryset(self, request):
-        qs = super(PostAdmin, self).get_queryset(request)
-        return qs.filter(owner=request.user)
+    # def get_queryset(self, request):
+    #     qs = super(PostAdmin, self).get_queryset(request)
+    #     return qs.filter(owner=request.user)
 
     class Media:
         css = {

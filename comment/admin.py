@@ -1,10 +1,9 @@
 from django.contrib import admin
 
-from blog.base_admin import BaseOwnerAdmin
 from blog.custom_site import custom_site
 from .models import Comment
 
 
 @admin.register(Comment, site=custom_site)
-class CommentAdmin(BaseOwnerAdmin):
+class CommentAdmin(admin.ModelAdmin):
     list_display = ('target', 'nickname', 'content', 'website', 'created_time')
