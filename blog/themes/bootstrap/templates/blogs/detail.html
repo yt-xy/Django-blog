@@ -1,6 +1,12 @@
 {% extends "./base.html" %}
 {% block title %}{{ post.title }}{% endblock %}
 
+{% block extra %}
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/googlecode.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}
+
 {% block main %}
     {% if post %}
         <h1>{{ post.title }}</h1>
@@ -10,7 +16,7 @@
         </div>
         <hr/>
         <p>
-            {{ post.content }}
+            {{ post.content_html }}
         </p>
     {% endif %}
     <hr />
@@ -32,7 +38,7 @@
                     </div>
                     <div class="comment-content">
                         {% autoescape off %}
-                            {{ comment.content }}
+                            {{ comment.content_html }}
                         {% endautoescape %}
                     </div>
                 </li>
